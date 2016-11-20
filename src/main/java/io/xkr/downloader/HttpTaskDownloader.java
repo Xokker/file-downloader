@@ -1,5 +1,6 @@
-package io.xkr;
+package io.xkr.downloader;
 
+import io.xkr.DownloadTask;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,7 +26,7 @@ public class HttpTaskDownloader implements TaskDownloader {
     public InputStream download(DownloadTask task) throws IOException {
 
         Request request = new Request.Builder()
-                .url(task.getPath())
+                .url(task.getResourcePath())
                 .build();
 
         Response response = client.newCall(request).execute();

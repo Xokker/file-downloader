@@ -1,7 +1,7 @@
-package io.xkr;
+package io.xkr.downloader;
 
+import io.xkr.DownloadTask;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ public class FtpDownloader implements TaskDownloader {
     @Override
     public InputStream download(DownloadTask task) throws IOException {
         FTPClient client = new FTPClient();
-        String path = task.getPath();
+        String path = task.getResourcePath();
         URI uri;
         try {
             uri = new URI(path);

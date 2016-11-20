@@ -1,8 +1,9 @@
-package io.xkr;
+package io.xkr.downloader;
+
+import io.xkr.DownloadTask;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * @author ernest
