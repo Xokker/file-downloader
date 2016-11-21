@@ -2,6 +2,7 @@ package io.xkr;
 
 import io.xkr.downloader.FtpDownloader;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertTrue;
  * @author ernest
  * @since 14/11/16.
  */
+@Ignore
 public class FtpDownloaderTest {
 
     private FtpDownloader downloader;
@@ -26,6 +28,17 @@ public class FtpDownloaderTest {
     @Test
     public void downloadOk() throws Exception {
         InputStream stream = downloader.download(new DownloadTask("ftp://ftp.vim.org/pub/vim//README"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        long linesContaingVim = reader.lines()
+                .filter(line -> line.contains("vim"))
+                .count();
+
+        assertTrue(linesContaingVim > 2);
+    }
+
+    @Test
+    public void downloadOk2() throws Exception {
+        InputStream stream = downloader.download(new DownloadTask("ftp://download.nvidia.com//CUDAOpen64/nvopencc-2.3-src.tar.gz"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         long linesContaingVim = reader.lines()
                 .filter(line -> line.contains("vim"))

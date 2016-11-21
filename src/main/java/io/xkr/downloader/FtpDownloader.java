@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ernest
@@ -16,7 +17,6 @@ public class FtpDownloader implements TaskDownloader {
 
     @Override
     public InputStream download(DownloadTask task) throws IOException {
-        FTPClient client = new FTPClient();
         String path = task.getResourcePath();
         URI uri;
         try {
@@ -25,7 +25,14 @@ public class FtpDownloader implements TaskDownloader {
             throw new RuntimeException(e);
         }
         String domain = uri.getHost();
+
+        FTPClient client = new FTPClient();
+        int timeout = (int) TimeUnit.SECONDS.toMillis(10);
+        client.setConnectTimeout(timeout);
+        client.setDataTimeout(timeout);
+        client.setConnectTimeout(timeout);
         client.connect(domain);
+        client.setSoTimeout(timeout);
         client.login("anonymous", "anonymous");
 
         InputStream stream = client.retrieveFileStream(uri.getPath());  // TODO: close input stream
