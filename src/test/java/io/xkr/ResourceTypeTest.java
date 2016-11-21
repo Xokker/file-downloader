@@ -22,8 +22,9 @@ public class ResourceTypeTest {
         assertEquals(ResourceType.FTP, ResourceType.resolve(task));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void resolveIllegal() throws Exception {
-        ResourceType.resolve(new DownloadTask("ldap://ldap.server.com/path/to"));
+    @Test
+    public void resolveUnknown() throws Exception {
+        DownloadTask task = new DownloadTask("ldap://ldap.server.com/path/to");
+        assertEquals(ResourceType.UNKNOWN, ResourceType.resolve(task));
     }
 }
