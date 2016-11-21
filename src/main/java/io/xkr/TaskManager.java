@@ -30,7 +30,8 @@ public class TaskManager {
     private final ResourceStore resourceStore;
 
     public TaskManager(Path storePath) {
-        executor = new ThreadPoolExecutor(5, 10, 0L, TimeUnit.MILLISECONDS,
+        int processors = Runtime.getRuntime().availableProcessors();
+        executor = new ThreadPoolExecutor(processors * 2, processors * 4, 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
         resourceStore = new ResourceStore(storePath);
     }
@@ -44,12 +45,13 @@ public class TaskManager {
 
     private void executeTask(DownloadTask task) {
         try {
-            System.out.println("Task " + task + " started");
             ResourceType resourceType = ResourceType.resolve(task);
             TaskDownloader downloader = downloaders.get(resourceType);
             if (downloader == null) {
+                System.out.println("Task " + task + " discarded");
                 throw new IllegalArgumentException("Resource type is not supported. Path: " + task.getResourcePath());
             }
+            System.out.println("Task " + task + " started");
 
             InputStream stream;
             try {

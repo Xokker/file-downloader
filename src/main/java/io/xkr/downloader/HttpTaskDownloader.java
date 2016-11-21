@@ -31,6 +31,7 @@ public class HttpTaskDownloader implements TaskDownloader {
 
         Response response = client.newCall(request).execute();
         int responseCode = response.code();
+        // we assume that successful download returns Success code
         if (responseCode / 100 != 2) {
             throw new RuntimeException("Download failed. Response code: " + responseCode);  // TODO: custom exception
         }
