@@ -51,20 +51,21 @@ public class TaskManager {
                 throw new IllegalArgumentException("Resource type is not supported. Path: " + task.getResourcePath());
             }
 
-            InputStream stream = null;
+            InputStream stream;
             try {
                 stream = downloader.download(task);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.err.println("Task " + task + " failed");
                 e.printStackTrace();
                 return;
             }
-            System.out.println("storing " + task + "...");
             resourceStore.store(task, stream);
             System.out.println("Task " + task + " completed");
-            stream.close();
-        } catch (IOException e) {
-            // ignore input stream closing exception
+            try {
+                stream.close();
+            } catch (IOException e) {
+                // logger.warn
+            }
         } finally {
             pendingTasks.remove(task);
         }
@@ -72,6 +73,10 @@ public class TaskManager {
 
     public void shutdown() {
         executor.shutdown();
+    }
+
+    public void shutdownNow() {
+        shutdown();
         pendingTasks.forEach((task, future) -> future.cancel(true));
         executor.shutdownNow();
     }

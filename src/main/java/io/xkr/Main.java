@@ -49,6 +49,8 @@ public class Main {
 
         TaskManager taskManager = new TaskManager(parsedArgs.storeDir);
         tasks.forEach(taskManager::scheduleTask);
+
+        taskManager.shutdown();
     }
 
     private static void logTaskTypes(List<DownloadTask> tasks) {

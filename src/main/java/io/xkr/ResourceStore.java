@@ -25,7 +25,6 @@ public class ResourceStore {
         File outputFile = pathToFile.toFile();
 
         try {
-            System.out.println(" Task " + task + " stored");
             OutputStream output = new FileOutputStream(outputFile);
             IOUtils.copyLarge(data, output);
             output.close();
