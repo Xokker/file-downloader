@@ -1,0 +1,6 @@
+http://www.umich.edu/~umfandsf/other/ebooks/alice30.txt
+ftp://download.nvidia.com//CUDAOpen64/nvopencc-2.3-src.tar.gz
+https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tim_Berners-Lee_CP_2.jpg/1920px-Tim_Berners-Lee_CP_2.jpg
+ftp://ftp.vim.org/pub/vim//README
+ftp://ftp.vcu.edu//pub/gnu_linux/ubuntu/ls-lR.gz
+bla://resource.org/pub/file.txt
